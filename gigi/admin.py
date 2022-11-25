@@ -9,4 +9,8 @@ class CollectionAdmin(admin.ModelAdmin):
 
 @admin.register(Feature)
 class FeatureAdmin(admin.ModelAdmin):
-    list_display =['scent','description','slug','price','in_stock', 'created']
+        list_display =['scent','description','slug','price','in_stock', 'created']
+        list_filter = ['in_stock']
+        list_editable = ['price', 'in_stock']
+        prepopulated_fields = {'slug': ('title',)} 
+
