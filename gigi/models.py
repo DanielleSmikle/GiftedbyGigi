@@ -6,13 +6,14 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
+    slug = models.SlugField(max_length=255, unique=True, default='customer')
 
     def __str__(self):
         return self.name
 
 class Collection(models.Model):
     name = models.CharField(max_length =255, db_index=True)
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, default='collection')
 
     class Meta:
         verbose_name_plural = 'collections'
@@ -29,7 +30,7 @@ class Feature(models.Model):
     scent = models.CharField(max_length= 255)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/')
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, default='features')
     size = models.CharField(max_length=5, choices= SIZE_CHOICES, default='small')
     price = models.FloatField()
     in_stock = models.BooleanField(default=True)
@@ -59,7 +60,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added= models.DateTimeField(auto_now_add=True)
 
-class ShippingAddres(models.Model): 
+class ShippingAddress(models.Model): 
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.CharField(max_length=200, null=True)
