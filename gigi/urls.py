@@ -4,6 +4,6 @@ from . import views
 app_name = 'gigi'
 
 urlpatterns = [
-    path('', views.all_products, name='all_products'),
+    path('', views.all_features, name='all_features'), 
 
 ]
