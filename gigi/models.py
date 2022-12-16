@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+from django.urls import reverse
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -17,6 +18,9 @@ class Collection(models.Model):
 
     class Meta:
         verbose_name_plural = 'collections'
+
+    def get_absolute_url(self):
+        return reverse('gigi:feature_detail', args=[self.slug])
 
     def __str__(self):
         return self.name
@@ -41,6 +45,9 @@ class Feature(models.Model):
     class Meta:
         verbose_name_plural= 'Features'
         ordering=('-created', )
+
+    def get_absolute_url(self):
+        return reverse('gigi:feature_detail', args=[self.slug])
 
     def __str__(self):
         return self.scent
