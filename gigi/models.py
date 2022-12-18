@@ -20,7 +20,7 @@ class Collection(models.Model):
         verbose_name_plural = 'collections'
 
     def get_absolute_url(self):
-        return reverse('gigi:feature_detail', args=[self.slug])
+        return reverse('gigi:collection_list', args=[self.slug])
 
     def __str__(self):
         return self.name
