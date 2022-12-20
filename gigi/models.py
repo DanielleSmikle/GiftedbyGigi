@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 from django.urls import reverse
 
+
+
+class FeatureManager(models.Manager):
+    def get_queryset(self):
+        return super(FeatureManager, self).get_queryset().filter(is_active=True)
+
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True)
@@ -11,6 +17,10 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+
 
 class Collection(models.Model):
     name = models.CharField(max_length =255, db_index=True)
@@ -38,8 +48,11 @@ class Feature(models.Model):
     size = models.CharField(max_length=5, choices= SIZE_CHOICES, default='small')
     price = models.FloatField()
     in_stock = models.BooleanField(default=True)
+    is_active= models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    objects= models.Manager()
+    features= FeatureManager()
     #image
 
     class Meta:
